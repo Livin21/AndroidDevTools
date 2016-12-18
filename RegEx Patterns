@@ -1,0 +1,8 @@
+RegEx Patterns
+______________
+
+Date format (dd/mm/yyyy): ^([0-9]{2})/([0-9]{2})/([0-9]{4})
+
+URL (http://www.lmntrx.com): ^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]
+
+Indian Mobile Number (+919744xxxxxx): ^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$
