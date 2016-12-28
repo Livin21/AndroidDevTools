@@ -1,0 +1,2 @@
+# AndroidDevTools
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/12db15e5cf4344f3b38ca11e1cbc68aa)](https://www.codacy.com/app/livinmathew99/AndroidDevTools?utm_source=github.com&utm_medium=referral&utm_content=Livin21/AndroidDevTools&utm_campaign=badger)
