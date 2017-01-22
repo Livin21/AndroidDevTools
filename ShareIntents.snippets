@@ -1,0 +1,104 @@
+ShareIntent to all Apps:
+
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, "YOUR MESSAGE");
+        sendIntent.setType("text/plain");
+        startActivity(sendIntent);
+
+ShareIntent to Facebook App:
+
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, "URL"); //String messages will not work. Only links can be shared
+
+        // See if official Facebook app is found
+        boolean facebookAppFound = false;
+        List<ResolveInfo> matches = getPackageManager().queryIntentActivities(intent, 0);
+        for (ResolveInfo info : matches) {
+            if (info.activityInfo.packageName.toLowerCase().startsWith("com.facebook.katana")) {
+                intent.setPackage(info.activityInfo.packageName);
+                facebookAppFound = true;
+                break;
+            }
+        }
+
+        // As fallback, launch sharer.php in a browser
+        if (!facebookAppFound) {
+            String sharerUrl = "https://www.facebook.com/sharer/sharer.php?u=" + "URL";
+            intent = new Intent(Intent.ACTION_VIEW, Uri.parse(sharerUrl));
+        }
+
+        startActivity(intent);
+
+ShareIntent to Twitter:
+		Intent tweetIntent = new Intent(Intent.ACTION_SEND);
+        tweetIntent.putExtra(Intent.EXTRA_TEXT, "YOUR MESSAGE");
+        tweetIntent.setType("text/plain");
+
+        PackageManager packManager = getPackageManager();
+        List<ResolveInfo> resolvedInfoList = packManager.queryIntentActivities(tweetIntent,  PackageManager.MATCH_DEFAULT_ONLY);
+
+        boolean resolved = false;
+        for(ResolveInfo resolveInfo: resolvedInfoList){
+            if(resolveInfo.activityInfo.packageName.startsWith("com.twitter.android")){
+                tweetIntent.setClassName(
+                        resolveInfo.activityInfo.packageName,
+                        resolveInfo.activityInfo.name );
+                resolved = true;
+                break;
+            }
+        }
+        if(resolved){
+            startActivity(tweetIntent);
+        }else{
+            Intent i = new Intent();
+            i.putExtra(Intent.EXTRA_TEXT, "Download OrthodoxRadio. " + APP_DOWNLOAD_URL);
+            i.setAction(Intent.ACTION_VIEW);
+            i.setData(Uri.parse("https://twitter.com/intent/tweet?text="+urlEncode("YOUR MESSAGE")));
+            startActivity(i);
+        }
+
+        //urlEncode()
+        private String urlEncode(String s) {
+        try {
+            return URLEncoder.encode(s, "UTF-8");
+        }catch (UnsupportedEncodingException e) {
+            Log.wtf(HomePage.class.getSimpleName(), "UTF-8 should always be supported", e);
+            return "";
+        	}
+    	}
+
+ShareIntent to WhatsApp
+		Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
+        whatsappIntent.setType("text/plain");
+        whatsappIntent.setPackage("com.whatsapp");
+        whatsappIntent.putExtra(Intent.EXTRA_TEXT, "The text you wanted to share");
+        try {
+            activity.startActivity(whatsappIntent);
+        } catch (android.content.ActivityNotFoundException ex) {
+            ToastHelper.MakeShortText("Whatsapp have not been installed.");
+        }
+
+ShareIntent to GooglePlus:
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT,
+                "Just testing, check this out: http://stackoverflow.com/questions/28212490/");
+        filterByPackageName(this, intent, "com.google.android.apps.plus");
+        try {
+            startActivity(intent);
+        }catch (ActivityNotFoundException e){
+            Toast.makeText(this, "GooglePlus have not been installed.", Toast.LENGTH_SHORT).show();
+        }
+    
+    //filterByPackageName()
+    private static void filterByPackageName(Context context, Intent intent, String prefix) {
+        List<ResolveInfo> matches = context.getPackageManager().queryIntentActivities(intent, 0);
+        for (ResolveInfo info : matches) {
+            if (info.activityInfo.packageName.toLowerCase().startsWith(prefix)) {
+                intent.setPackage(info.activityInfo.packageName);
+                return;
+            }
+        }
+    }
