@@ -6,6 +6,51 @@ ShareIntent to all Apps:
         sendIntent.setType("text/plain");
         startActivity(sendIntent);
 
+//via Email:
+
+Intent intent2 = new Intent();
+intent2.setAction(Intent.ACTION_SEND);
+intent2.setType("message/rfc822");
+intent2.putExtra(Intent.EXTRA_EMAIL, new String[]{EMAIL1, EMAIL2});
+intent2.putExtra(Intent.EXTRA_SUBJECT, "Email Subject");
+intent2.putExtra(Intent.EXTRA_TEXT, "Your text here" );  
+startActivity(intent2);
+
+//Share Files:
+
+//Image:
+
+boolean isPNG = (path.toLowerCase().endsWith(".png")) ? true : false;
+
+Intent i = new Intent(Intent.ACTION_SEND);
+//Set type of file
+if(isPNG)
+{
+    i.setType("image/png");//With png image file or set "image/*" type
+}
+else
+{
+    i.setType("image/jpeg");
+}
+
+Uri imgUri = Uri.fromFile(new File(path));//Absolute Path of image
+i.putExtra(Intent.EXTRA_STREAM, imgUri);//Uri of image
+startActivity(Intent.createChooser(i, "Share via"));
+break;
+
+//APK:
+
+File f = new File(path1);
+if(f.exists())
+{
+
+   Intent intent2 = new Intent();
+   intent2.setAction(Intent.ACTION_SEND);
+   intent2.setType("application/vnd.android.package-archive");//APk file type  
+   intent2.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(f) );  
+   startActivity(Intent.createChooser(intent2, "Share via"));
+}
+
 ShareIntent to Facebook App:
 
         Intent intent = new Intent(Intent.ACTION_SEND);
