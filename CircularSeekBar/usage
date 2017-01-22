@@ -1,0 +1,18 @@
+
+    <in.radview.orthodoxradio.CircularSeekBar
+        android:id="@+id/circularSeekBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        app:circle_x_radius="125dp"
+        app:circle_y_radius="125dp"
+        app:use_custom_radii="true"
+        app:circle_stroke_width="1.5dp"
+        app:circle_color="@color/disabled"
+        app:progress="75"
+        app:circle_progress_color="@color/colorEastern"
+        app:max="100"
+        app:pointer_alpha_ontouch="50"
+        app:pointer_color="@color/colorMalibu"
+        app:pointer_halo_color="@color/colorEastern"
+        />
