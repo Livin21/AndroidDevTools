@@ -16,6 +16,27 @@ import android.support.v4.content.ContextCompat;
 /*
     Use it as follows
 
+    ic_menu_cart.xml
+    <?xml version="1.0" encoding="utf-8"?>
+    <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+            <item
+                android:drawable="@drawable/ic_action_cart"
+                android:gravity="center" />
+
+            <!-- set a place holder Drawable so android:drawable isn't null -->
+            <item
+                android:id="@+id/ic_badge"
+                android:drawable="@drawable/ic_action_cart" />
+    </layer-list>
+
+    menuItem
+
+    <item
+        android:title="@string/cart"
+        android:icon="@drawable/ic_menu_cart"
+        app:showAsAction="always"
+        android:id="@+id/action_cart"/>
+
     MenuItem itemCart = menu.findItem(R.id.action_cart);
     LayerDrawable icon = (LayerDrawable) itemCart.getIcon();
     Cart.setBadgeCount(this, icon, count);
